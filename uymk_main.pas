@@ -20,8 +20,21 @@ type
     btnDeleteObject: TButton;
     edtImageDir: TDirectoryEdit;
     IMG: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
     lstObjects: TListBox;
     lstObjectNames: TListBox;
+    mnuMoveObjUp: TMenuItem;
+    mnuMoveObjDown: TMenuItem;
+    mnuMoveObjLeft: TMenuItem;
+    mnuMoveObjRight: TMenuItem;
+    mnuDecreaseWidth: TMenuItem;
+    mnuIncreaseWidth: TMenuItem;
+    mnuIncreaseHeight: TMenuItem;
+    mnuResizeObject: TMenuItem;
+    mnuDecreaseHeight: TMenuItem;
+    mnuMoveObject: TMenuItem;
+    N4: TMenuItem;
     MNU: TMainMenu;
     memObjects: TMemo;
     mnuImage: TMenuItem;
@@ -135,6 +148,15 @@ type
     procedure lstFilesChange(Sender: TObject);
     procedure lstObjectsClick(Sender: TObject);
     procedure memObjectsChange(Sender: TObject);
+    procedure memObjectsEnter(Sender: TObject);
+    procedure mnuDecreaseHeightClick(Sender: TObject);
+    procedure mnuDecreaseWidthClick(Sender: TObject);
+    procedure mnuIncreaseHeightClick(Sender: TObject);
+    procedure mnuIncreaseWidthClick(Sender: TObject);
+    procedure mnuMoveObjDownClick(Sender: TObject);
+    procedure mnuMoveObjLeftClick(Sender: TObject);
+    procedure mnuMoveObjRightClick(Sender: TObject);
+    procedure mnuMoveObjUpClick(Sender: TObject);
     procedure mnuQuickAddObjClick(Sender: TObject);
     procedure mnuPreviousObjectClick(Sender: TObject);
     procedure mnuNextObjectClick(Sender: TObject);
@@ -164,6 +186,7 @@ type
     ObjMoveX, ObjMoveY : integer;
     ObjMoveDirection : string;
     PenColor : TColor;
+    procedure ChangeBoxVisibility(Visib : Boolean);
     procedure BasicReadImage(FileName : string);
     procedure BasicReadMarkers(FileName : string);
     procedure BasicResizeImageComponent;
@@ -321,8 +344,7 @@ var
   sh : TShape;
   objName,dummy : string;
 begin
-  ObjBox.Visible := False;
-  ObjLbl.Visible := False;
+  ChangeBoxVisibility(False);
   idx := lstObjects.ItemIndex;
   if idx < 0 then Exit;
 
@@ -332,8 +354,7 @@ begin
   Inc(idx);
   sh := FindComponent('Shape'+IntToStr(idx)) as TShape;
 
-  ObjLbl.Visible := True;
-  ObjBox.Visible := True;
+  ChangeBoxVisibility(True);
 
   ObjBox.SetBounds(sh.Left,sh.Top,sh.Width,sh.Height);
   ObjLbl.Caption := objName;
@@ -346,6 +367,97 @@ begin
   then begin
     BasicRecalculateShapes;
   end;
+end;
+
+procedure TfrmYoloMarker.ChangeBoxVisibility(Visib : Boolean);
+begin
+  ObjBox.Visible := Visib;
+  ObjLbl.Visible := Visib;
+  mnuMoveObject.Visible := Visib;
+  mnuResizeObject.Visible := Visib;
+end;
+
+procedure TfrmYoloMarker.memObjectsEnter(Sender: TObject);
+begin
+  lstObjects.ItemIndex := -1;
+  ChangeBoxVisibility(False);
+end;
+
+procedure TfrmYoloMarker.mnuDecreaseHeightClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Height > 1
+  then
+    ObjBox.SetBounds(ObjBox.Left, ObjBox.Top, ObjBox.Width, ObjBox.Height - 1);
+end;
+
+procedure TfrmYoloMarker.mnuDecreaseWidthClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Width > 1
+  then
+    ObjBox.SetBounds(ObjBox.Left, ObjBox.Top, ObjBox.Width - 1, ObjBox.Height);
+
+end;
+
+procedure TfrmYoloMarker.mnuIncreaseHeightClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Top + ObjBox.Height < panInnerImg.Height
+  then
+    ObjBox.SetBounds(ObjBox.Left, ObjBox.Top, ObjBox.Width, ObjBox.Height + 1);
+
+end;
+
+procedure TfrmYoloMarker.mnuIncreaseWidthClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Left + ObjBox.Width < panInnerImg.Width
+  then
+    ObjBox.SetBounds(ObjBox.Left, ObjBox.Top, ObjBox.Width + 1, ObjBox.Height);
+end;
+
+//if ObjBox.Width > 2 then ObjBox.SetBounds(ObjBox.Left+1,ObjBox.Top,ObjBox.Width-2,ObjBox.Height);
+//if ObjBox.Height > 2 then ObjBox.SetBounds(ObjBox.Left,ObjBox.Top+1,ObjBox.Width,ObjBox.Height-2);
+
+procedure TfrmYoloMarker.mnuMoveObjDownClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Top + ObjBox.Height < panInnerImg.Height
+  then
+    ObjBox.SetBounds(ObjBox.Left, ObjBox.Top + 1, ObjBox.Width, ObjBox.Height);
+end;
+
+procedure TfrmYoloMarker.mnuMoveObjLeftClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Left > 0
+  then
+    ObjBox.SetBounds(ObjBox.Left - 1, ObjBox.Top, ObjBox.Width, ObjBox.Height);
+end;
+
+procedure TfrmYoloMarker.mnuMoveObjRightClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Left + ObjBox.Width < panInnerImg.Width
+  then
+    ObjBox.SetBounds(ObjBox.Left + 1, ObjBox.Top, ObjBox.Width, ObjBox.Height);
+end;
+
+procedure TfrmYoloMarker.mnuMoveObjUpClick(Sender: TObject);
+begin
+  if not ObjBox.Visible then Exit;
+
+  if ObjBox.Top > 0
+  then
+    ObjBox.SetBounds(ObjBox.Left, ObjBox.Top - 1, ObjBox.Width, ObjBox.Height);
 end;
 
 procedure TfrmYoloMarker.mnuQuickAddObjClick(Sender: TObject);
@@ -792,8 +904,7 @@ var
   px,py,pw,ph : double;
   sh : TShape;
 begin
-  ObjBox.Visible := False;
-  ObjLbl.Visible := False;
+  ChangeBoxVisibility(False);
   lstObjects.Clear;
   for i := 1 to 64 do
   begin

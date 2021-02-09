@@ -5172,7 +5172,7 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object lstObjects: TListBox
       Left = 1
-      Height = 263
+      Height = 243
       Top = 241
       Width = 326
       Align = alClient
@@ -5186,7 +5186,7 @@ object frmYoloMarker: TfrmYoloMarker
       Cursor = crVSplit
       Left = 1
       Height = 8
-      Top = 504
+      Top = 484
       Width = 326
       Align = alBottom
       ResizeAnchor = akBottom
@@ -5199,10 +5199,29 @@ object frmYoloMarker: TfrmYoloMarker
       Align = alBottom
       Font.Name = 'Courier New'
       OnChange = memObjectsChange
+      OnEnter = memObjectsEnter
       ParentFont = False
       ScrollBars = ssBoth
       TabOrder = 6
       WordWrap = False
+    end
+    object Label1: TLabel
+      Left = 10
+      Height = 14
+      Top = 10
+      Width = 41
+      Caption = 'Label1'
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Left = 1
+      Height = 20
+      Top = 492
+      Width = 326
+      Align = alBottom
+      AutoSize = False
+      Caption = 'Tags Editor:'
+      ParentColor = False
     end
   end
   object tmrFileChanged: TTimer
@@ -5294,6 +5313,55 @@ object frmYoloMarker: TfrmYoloMarker
         Caption = 'Quick-Add Object (Last used Class)'
         ShortCut = 24657
         OnClick = mnuQuickAddObjClick
+      end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object mnuMoveObject: TMenuItem
+        Caption = 'Move'
+        object mnuMoveObjUp: TMenuItem
+          Caption = 'Up'
+          ShortCut = 16422
+          OnClick = mnuMoveObjUpClick
+        end
+        object mnuMoveObjDown: TMenuItem
+          Caption = 'Down'
+          ShortCut = 16424
+          OnClick = mnuMoveObjDownClick
+        end
+        object mnuMoveObjLeft: TMenuItem
+          Caption = 'Left'
+          ShortCut = 16421
+          OnClick = mnuMoveObjLeftClick
+        end
+        object mnuMoveObjRight: TMenuItem
+          Caption = 'Right'
+          ShortCut = 16423
+          OnClick = mnuMoveObjRightClick
+        end
+      end
+      object mnuResizeObject: TMenuItem
+        Caption = 'Resize'
+        object mnuIncreaseWidth: TMenuItem
+          Caption = 'Increase Width'
+          ShortCut = 8231
+          OnClick = mnuIncreaseWidthClick
+        end
+        object mnuDecreaseWidth: TMenuItem
+          Caption = 'Decrease Width'
+          ShortCut = 8229
+          OnClick = mnuDecreaseWidthClick
+        end
+        object mnuIncreaseHeight: TMenuItem
+          Caption = 'Increase Height'
+          ShortCut = 8232
+          OnClick = mnuIncreaseHeightClick
+        end
+        object mnuDecreaseHeight: TMenuItem
+          Caption = 'Decrease Height'
+          ShortCut = 8230
+          OnClick = mnuDecreaseHeightClick
+        end
       end
     end
   end
