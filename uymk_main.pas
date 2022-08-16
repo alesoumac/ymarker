@@ -204,6 +204,25 @@ implementation
 
 {$R *.lfm}
 
+function StrToFDef(s : string; Default : Extended) : Extended;
+var
+  p : integer;
+begin
+  try
+    if DefaultFormatSettings.DecimalSeparator <> '.'
+    then begin
+      p := Pos('.',s);
+      if p > 0
+      then
+        s[p] := DefaultFormatSettings.DecimalSeparator;
+    end;
+    Result := StrToFloat(s);
+  except
+    if p > 0 then s[p] := '.';
+    Result := StrToFloatDef(s, Default);
+  end;
+end;
+
 { TfrmYoloMarker }
 procedure SplitString(SplitChar : char; var S : string; var Initial : string);
 var
@@ -567,6 +586,7 @@ begin
     + ' ' + FormatFloat('0.000000',py)
     + ' ' + FormatFloat('0.000000',pw)
     + ' ' + FormatFloat('0.000000',ph);
+  L := StringReplace(L,',','.',[rfReplaceAll]);
   memObjects.Lines[idx] := L;
 end;
 
@@ -867,15 +887,15 @@ begin
       L := memObjects.Lines[i];
       if L = '' then continue;
       SplitString(' ',L,dummy);
-      if StrToIntDef(dummy,-100) = -100 then TxtRecognized := False;
+      if (dummy <> '') and (StrToIntDef(dummy,-1) = -1) then TxtRecognized := False;
       W := 0;
       H := 0;
       for j := 1 to 4 do
       begin
         W := H;
         SplitString(' ',L,dummy);
-        H := StrToFloatDef(dummy,-1000000);
-        if Round(H) = -1000000 then TxtRecognized := False;
+        H := StrToFDef(dummy,-1000000);
+        if (dummy <> '') and (Round(H) = -1000000) then TxtRecognized := False;
       end;
       if not TxtRecognized then Break;
       //L := memObjects.Lines[i] + ' > ' + FloatToStr(W * H);
@@ -925,19 +945,19 @@ begin
       objClassName := IntToStr(i+1) + ': ' + lstObjectNames.Items[classNumber];
 
     SplitString(' ',L,numberStr);
-    px := StrToFloatDef(numberStr,-1);
+    px := StrToFDef(numberStr,-1);
     if px < 0 then Continue;
 
     SplitString(' ',L,numberStr);
-    py := StrToFloatDef(numberStr,-1);
+    py := StrToFDef(numberStr,-1);
     if py < 0 then Continue;
 
     SplitString(' ',L,numberStr);
-    pw := StrToFloatDef(numberStr,-1);
+    pw := StrToFDef(numberStr,-1);
     if pw < 0 then Continue;
 
     SplitString(' ',L,numberStr);
-    ph := StrToFloatDef(numberStr,-1);
+    ph := StrToFDef(numberStr,-1);
     if ph < 0 then Continue;
 
     NewWidth  := Trunc(pw * panInnerImg.Width);
@@ -951,7 +971,7 @@ begin
     sh.SetBounds(NewLeft,NewTop,NewWidth,NewHeight);
     sh.Visible := True;
     sh.Pen.Width := 1;
-    sh.Pen.Color := clWhite;
+    sh.Pen.Color := clRed;
     sh.Pen.Mode  := pmCopy;
     sh.Brush.Style := bsClear;
     sh.Cursor := crHandPoint;

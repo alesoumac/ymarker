@@ -1,34 +1,34 @@
 object frmYoloMarker: TfrmYoloMarker
-  Left = 534
-  Height = 782
-  Top = 54
+  Left = 423
+  Height = 674
+  Top = 114
   Width = 1057
   Caption = 'Yolo Marker'
-  ClientHeight = 760
+  ClientHeight = 654
   ClientWidth = 1057
   Menu = MNU
   OnClose = FormClose
   OnCreate = FormCreate
-  LCLVersion = '2.0.6.0'
+  LCLVersion = '2.0.12.0'
   WindowState = wsMaximized
   object panClient: TPanel
     Left = 336
-    Height = 654
+    Height = 548
     Top = 106
     Width = 721
     Align = alClient
     BorderWidth = 12
-    ClientHeight = 654
+    ClientHeight = 548
     ClientWidth = 721
     TabOrder = 0
     object panImage: TPanel
       Left = 13
-      Height = 628
+      Height = 522
       Top = 13
       Width = 695
       Align = alClient
       BevelOuter = bvNone
-      ClientHeight = 628
+      ClientHeight = 522
       ClientWidth = 695
       TabOrder = 0
       OnResize = panImageResize
@@ -4335,7 +4335,7 @@ object frmYoloMarker: TfrmYoloMarker
         end
         object ObjLbl: TLabel
           Left = 16
-          Height = 14
+          Height = 15
           Top = 64
           Width = 15
           Caption = '.....'
@@ -5010,14 +5010,13 @@ object frmYoloMarker: TfrmYoloMarker
         ItemHeight = 0
         ScrollWidth = 122
         TabOrder = 1
-        TopIndex = -1
         Visible = False
       end
     end
   end
   object spl01: TSplitter
     Left = 328
-    Height = 654
+    Height = 548
     Top = 106
     Width = 8
     Beveled = True
@@ -5034,8 +5033,8 @@ object frmYoloMarker: TfrmYoloMarker
     TabOrder = 2
     object edtImageDir: TDirectoryEdit
       Left = 7
-      Height = 25
-      Top = 35
+      Height = 23
+      Top = 37
       Width = 1043
       ShowHidden = False
       ButtonWidth = 23
@@ -5048,7 +5047,7 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object lblYoloMarker: TLabel
       Left = 7
-      Height = 14
+      Height = 15
       Top = 7
       Width = 1043
       Align = alTop
@@ -5060,8 +5059,8 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object lblSelectImgDir: TLabel
       Left = 7
-      Height = 14
-      Top = 21
+      Height = 15
+      Top = 22
       Width = 1043
       Align = alTop
       Caption = 'Select images directory:'
@@ -5069,7 +5068,7 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object lblSelectObjNameFile: TLabel
       Left = 7
-      Height = 14
+      Height = 15
       Top = 60
       Width = 1043
       Align = alTop
@@ -5078,8 +5077,8 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object edtObjName: TFileNameEdit
       Left = 7
-      Height = 25
-      Top = 74
+      Height = 23
+      Top = 75
       Width = 1043
       FilterIndex = 0
       HideDirectories = False
@@ -5094,11 +5093,11 @@ object frmYoloMarker: TfrmYoloMarker
   end
   object panLeft: TPanel
     Left = 0
-    Height = 654
+    Height = 548
     Top = 106
     Width = 328
     Align = alLeft
-    ClientHeight = 654
+    ClientHeight = 548
     ClientWidth = 328
     TabOrder = 3
     object lstFiles: TFileListBox
@@ -5112,7 +5111,6 @@ object frmYoloMarker: TfrmYoloMarker
       Mask = '*.jpg;*.jpeg;*.png;*.bmp'
       OnChange = lstFilesChange
       TabOrder = 0
-      TopIndex = -1
     end
     object spl02: TSplitter
       Cursor = crVSplit
@@ -5172,7 +5170,7 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object lstObjects: TListBox
       Left = 1
-      Height = 243
+      Height = 137
       Top = 241
       Width = 326
       Align = alClient
@@ -5180,13 +5178,12 @@ object frmYoloMarker: TfrmYoloMarker
       OnClick = lstObjectsClick
       ScrollWidth = 324
       TabOrder = 4
-      TopIndex = -1
     end
     object spl03: TSplitter
       Cursor = crVSplit
       Left = 1
       Height = 8
-      Top = 484
+      Top = 378
       Width = 326
       Align = alBottom
       ResizeAnchor = akBottom
@@ -5194,7 +5191,7 @@ object frmYoloMarker: TfrmYoloMarker
     object memObjects: TMemo
       Left = 1
       Height = 141
-      Top = 512
+      Top = 406
       Width = 326
       Align = alBottom
       Font.Name = 'Courier New'
@@ -5207,16 +5204,16 @@ object frmYoloMarker: TfrmYoloMarker
     end
     object Label1: TLabel
       Left = 10
-      Height = 14
+      Height = 15
       Top = 10
-      Width = 41
+      Width = 34
       Caption = 'Label1'
       ParentColor = False
     end
     object Label2: TLabel
       Left = 1
       Height = 20
-      Top = 492
+      Top = 386
       Width = 326
       Align = alBottom
       AutoSize = False
@@ -5228,31 +5225,31 @@ object frmYoloMarker: TfrmYoloMarker
     Enabled = False
     Interval = 250
     OnTimer = tmrFileChangedTimer
-    left = 866
-    top = 144
+    Left = 866
+    Top = 144
   end
   object tmrLoadFileList: TTimer
     Enabled = False
     Interval = 100
     OnTimer = tmrLoadFileListTimer
-    left = 866
-    top = 212
+    Left = 866
+    Top = 212
   end
   object tmrChangeObjBoxColor: TTimer
     Interval = 600
     OnTimer = tmrChangeObjBoxColorTimer
-    left = 872
-    top = 296
+    Left = 872
+    Top = 296
   end
   object tmrVerifyImageLoading: TTimer
     Interval = 500
     OnTimer = tmrVerifyImageLoadingTimer
-    left = 876
-    top = 399
+    Left = 876
+    Top = 399
   end
   object MNU: TMainMenu
-    left = 678
-    top = 657
+    Left = 678
+    Top = 657
     object mnuImage: TMenuItem
       Caption = 'Image'
       object mnuSelectDir: TMenuItem
